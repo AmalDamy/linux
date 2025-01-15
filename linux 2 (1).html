@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Interactive Linux Command Guide</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://imgcdn.stablediffusionweb.com/2024/4/5/83899ab0-4e40-4eb2-916e-632bfbbaf7b3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+        }
+        header {
+            background-color: rgba(30, 136, 229, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            text-shadow: none;
+        }
+        .command-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            margin: 20px;
+        }
+        .command-buttons button {
+            background-color: rgba(25, 118, 210, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-shadow: none;
+        }
+        .command-buttons button:hover {
+            background-color: rgba(13, 71, 161, 0.8);
+        }
+        .command-details {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            margin: 20px;
+        }
+        .command-details h2 {
+            color: #1e88e5;
+        }
+        .code-snippet {
+            background-color: rgba(40, 40, 40, 0.9);
+            color: #f1f1f1;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-top: 15px;
+        }
+        footer {
+            background-color: rgba(30, 30, 30, 0.8);
+            color: #888;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-shadow: none;
+        }
+        .back-button {
+            background-color: rgba(30, 136, 229, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-shadow: none;
+        }
+        .back-button:hover {
+            background-color: rgba(13, 71, 161, 0.8);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Interactive Linux Command Guide</h1>
+</header>
+
+<div class="command-buttons">
+    <button onclick="showCommand('find')">find</button>
+    <button onclick="showCommand('tar')">tar</button>
+    <button onclick="showCommand('gzip')">gzip</button>
+    <button onclick="showCommand('gunzip')">gunzip</button>
+    <button onclick="showCommand('zip')">zip</button>
+    <button onclick="showCommand('chmod')">chmod</button>
+    <button onclick="showCommand('chown')">chown</button>
+    <button onclick="showCommand('chgrp')">chgrp</button>
+    <button onclick="showCommand('ps')">ps</button>
+    <button onclick="showAllCommands()">All Commands</button>
+</div>
+
+<div id="command-details" class="command-details"></div>
+
+<footer>
+    <p>&copy; 2025 Linux Command Guide</p>
+</footer>
+
+<script>
+    const commands = {
+        find: {
+            title: "find Command",
+            description: "The <strong>find</strong> command is used to search for files and directories based on specific criteria such as name, size, or modification date.",
+            example: "find /home/user/ -name \"document.txt\"",
+            explanation: "This command searches for a file named \"document.txt\" in the /home/user/ directory.",
+            screenshot: "find.png"
+        },
+        tar: {
+            title: "tar Command",
+            description: "The <strong>tar</strong> command is used to compress and archive files into a single archive file for easier storage or transfer.",
+            example: "tar -cvf archive.tar /path/to/directory",
+            explanation: "This command creates a compressed archive of the specified directory.",
+            screenshot: "tar.png"
+        },
+        gzip: {
+            title: "gzip Command",
+            description: "The <strong>gzip</strong> command compresses files using the GNU zip algorithm to reduce file size.",
+            example: "gzip file.txt",
+            explanation: "This command compresses \"file.txt\" into a gzip archive.",
+            screenshot: "gzip.png"
+        },
+        gunzip: {
+            title: "gunzip Command",
+            description: "The <strong>gunzip</strong> command decompresses files compressed using gzip.",
+            example: "gunzip file.txt.gz",
+            explanation: "This command decompresses \"file.txt.gz\" back to its original form.",
+            screenshot: "gunzip.png"
+        },
+        zip: {
+            title: "zip Command",
+            description: "The <strong>zip</strong> command creates compressed zip archives from multiple files.",
+            example: "zip archive.zip file1.txt file2.txt",
+            explanation: "This command compresses file1.txt and file2.txt into a zip archive.",
+            screenshot: "zip.png"
+        },
+        chmod: {
+            title: "chmod Command",
+            description: "The <strong>chmod</strong> command changes file permissions for users and groups.",
+            example: "chmod 755 myscript.sh",
+            explanation: "This command grants the owner read, write, and execute permissions and others only read and execute permissions.",
+            screenshot: "chmod.png"
+        },
+        chown: {
+            title: "chown Command",
+            description: "The <strong>chown</strong> command changes file ownership.",
+            example: "chown user:group file.txt",
+            explanation: "This command assigns ownership of \"file.txt\" to user \"user\" and group \"group\".",
+            screenshot: "chown.png"
+        },
+        chgrp: {
+            title: "chgrp Command",
+            description: "The <strong>chgrp</strong> command changes the group ownership of a file or directory.",
+            example: "chgrp group file.txt",
+            explanation: "This command changes the group ownership of \"file.txt\" to the specified group.",
+            screenshot: "chgrp.png"
+        },
+        ps: {
+            title: "ps Command",
+            description: "The <strong>ps</strong> command displays information about running processes.",
+            example: "ps aux",
+            explanation: "This command shows a detailed list of all running processes.",
+            screenshot: "ps.png"
+        }
+    };
+
+    function showCommand(command) {
+        const commandDetails = document.getElementById("command-details");
+        const cmd = commands[command];
+        commandDetails.innerHTML = `
+            <h2>${cmd.title}</h2>
+            <p>${cmd.description}</p>
+            <p><strong>Usage Example:</strong></p>
+            <div class="code-snippet">${cmd.example}</div>
+            <p><strong>Explanation:</strong> ${cmd.explanation}</p>
+            ${cmd.screenshot ? `<p><strong>Example Screenshot:</strong></p><img src="${cmd.screenshot}" alt="${cmd.title} Screenshot" style="max-width: 100%; border-radius: 10px;">` : ""}
+            <button class="back-button" onclick="goBack()">Back</button>
+        `;
+        document.querySelector(".command-buttons").classList.add("hidden");
+        commandDetails.style.display = "block";
+    }
+
+    function showAllCommands() {
+        const commandDetails = document.getElementById("command-details");
+        commandDetails.innerHTML = Object.values(commands).map(cmd => `
+            <h2>${cmd.title}</h2>
+            <p>${cmd.description}</p>
+            <p><strong>Usage Example:</strong></p>
+            <div class="code-snippet">${cmd.example}</div>
+            <p><strong>Explanation:</strong> ${cmd.explanation}</p>
+            ${cmd.screenshot ? `<p><strong>Example Screenshot:</strong></p><img src="${cmd.screenshot}" alt="${cmd.title} Screenshot" style="max-width: 100%; border-radius: 10px;">` : ""}
+        `).join("") + `<button class="back-button" onclick="goBack()">Back</button>`;
+        document.querySelector(".command-buttons").classList.add("hidden");
+        commandDetails.style.display = "block";
+    }
+
+    function goBack() {
+        document.getElementById("command-details").style.display = "none";
+        document.querySelector(".command-buttons").classList.remove("hidden");
+    }
+</script>
+
+</body>
+</html>
